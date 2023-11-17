@@ -241,20 +241,17 @@ function getModelViewMatrix() {
   var rotationMatrixY = createRotationMatrix_Y(rotationY);
   var rotationMatrixZ = createRotationMatrix_Z(rotationZ);
 
-  var transformationMatrix = multiplyMatrices(translationMatrix, scaleMatrix);
-  transformationMatrix = multiplyMatrices(
-    transformationMatrix,
-    rotationMatrixZ
-  );
-  transformationMatrix = multiplyMatrices(
-    transformationMatrix,
-    rotationMatrixY
-  );
-  transformationMatrix = multiplyMatrices(
-    transformationMatrix,
-    rotationMatrixX
-  );
+  var identityMatrix = createIdentityMatrix();
 
+  var rotationMatrix = multiplyMatrices(rotationMatrixX, rotationMatrixY);
+  rotationMatrix = multiplyMatrices(rotationMatrix, rotationMatrixZ);
+
+  var transformationMatrix = multiplyMatrices(
+    identityMatrix,
+    translationMatrix
+  );
+  transformationMatrix = multiplyMatrices(transformationMatrix, scaleMatrix);
+  transformationMatrix = multiplyMatrices(transformationMatrix, rotationMatrix);
   return transformationMatrix;
 }
 
